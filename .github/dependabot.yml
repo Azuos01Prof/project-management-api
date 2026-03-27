@@ -6,24 +6,37 @@ updates:
     schedule:
       interval: "weekly"
       day: "monday"
-    open-pull-requests-limit: 10
+      time: "09:00"
+      timezone: "America/Sao_Paulo"
+    open-pull-requests-limit: 15
     labels:
       - "dependencies"
       - "security"
     commit-message:
       prefix: "chore"
+      prefix-development: "chore(dev)"
       include: "scope"
+    versioning-strategy: auto
     ignore:
       - dependency-name: "express"
         versions: ["5.x"]
-    reviewers:
-      - "your-username"
-  
+    groups:
+      development-dependencies:
+        patterns:
+          - "eslint*"
+          - "jest*"
+          - "nodemon"
+        update-types:
+          - "minor"
+          - "patch"
+    
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
     labels:
       - "github-actions"
       - "dependencies"
+    commit-message:
+      prefix: "ci"
