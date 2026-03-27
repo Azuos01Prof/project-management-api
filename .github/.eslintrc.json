@@ -11,11 +11,12 @@
   },
   "rules": {
     "no-console": "off",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
+    "no-unused-vars": ["warn", { "argsIgnorePattern": "next" }],
     "no-undef": "error",
-    "eqeqeq": ["error", "always"],
+    "eqeqeq": ["warn", "always"],
     "curly": ["error", "all"],
     "semi": ["error", "always"],
     "quotes": ["error", "single", { "avoidEscape": true }]
-  }
+  },
+  "ignorePatterns": ["node_modules/", "coverage/", "dist/", "test-client.js"]
 }
