@@ -6,11 +6,11 @@ on:
   pull_request:
     branches: [ main, master ]
   schedule:
-    - cron: '0 0 * * 0'  # Run weekly on Sundays
+    - cron: '0 0 * * 0'
 
 jobs:
   analyze:
-    name: Analyze
+    name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -20,21 +20,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ['javascript']
+        include:
+          - language: javascript-typescript
+            build-mode: none
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-    
-    - name: Autobuild
-      uses: github/codeql-action/autobuild@v2
+        build-mode: ${{ matrix.build-mode }}
+        queries: security-extended,security-and-quality
     
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"
